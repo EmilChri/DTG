@@ -20,24 +20,25 @@ int main(void){
     int i;
 
     sprintf(filename, "List%d.txt", N);
+    printf("%s \n", filename);
     printf("What number are we searching for?\n"); /* Feel free to alter this*/
     scanf("%d", &x);
 
     myFile = fopen(filename, "r");
 
     /* iList is read into array */
-    for (k = 0; k < N; k++)
-    {
+    for (k = 0; k < N; k++){
         fscanf(myFile, "%d", &array[k]);
     }
     fclose(myFile);
+
     printf("The size of the list is %d\n", N);
 
     /* start time */
     double startTime = clock();
 
-    for (i = 0; i < runs; i++)
-    {
+
+    for (i = 0; i < runs; i++){
         BinSearch(array, x);
     }
 
@@ -45,13 +46,16 @@ int main(void){
     double endTime = clock();
     double duration = (endTime - startTime) / CLOCKS_PER_SEC;
     printf("BinSearch needed: %.7fs\n", duration);
+
+
+
     /* start time */
     startTime = clock();
 
-    for (i = 0; i < runs; i++)
-    {
+    for (i = 0; i < runs; i++){
         LinSearch(array, x);
     }
+
     /* stop time and print */
     endTime = clock();
     duration = (endTime - startTime) / CLOCKS_PER_SEC;
@@ -59,69 +63,56 @@ int main(void){
 
     /* Prints the result */
     int result=LinSearch(array, x);
-    if (result == 0)
-    {
+    if (result == 0){
         printf("%d is not in the list \n",x);
     }
-    else
-    {
+    else {
         printf("%d is in position %d\n",array[result],result+1);
     }
 
     result=BinSearch(array, x);
-    if (result == 0)
-    {
+    if (result == 0){
         printf("%d is not in the list \n",x);
     }
-    else
-    {
-        printf("%d is in position %d\n",array[result],result+1);
+    else {
+        printf("BinSearch %d is in position %d\n",array[result],result+1);
     }
     printf("Done!\n"); /* Feel free to be more creative here */
     return 0;
 }
 
-int LinSearch(int array[], int x)
-{
-    int i=0;
-    /* Fill in your code HERE! */
-    while ((i < N) && (x != array[i]))
-    {
-        i = i + 1;
+int LinSearch(int array[], int x){
+    int i = 0;
+
+    while (i < N && x != array[i]) {
+        i++;
     }
-    if (array[i] == x)
-    {
+    if (array[i] == x) {
         return i;
     }
-    else
-        return 0;
+    return 0;
+
 }
 
-
-int BinSearch(int array[], int x)
-{
-    int i = 0;
+int BinSearch(int array[], int x){
+    int i = 1;
     int j = N;
     int m;
-    /* Fill in your code HERE */
-    while (i < j)
-    {
-        m = floor((i+j)/2);
-        if ( x > array[m])
-        {
+
+    while (i < j) {
+        m = floor((i + j) / 2);
+        if (x > array[m]) {
             i = m + 1;
         }
-        else
-        {
+        else {
             j = m;
         }
     }
-    if (x == array[i])
-    {
+    if (array[i] == x) {
         return i;
     }
-    else
-    {
-        return 0;
-    }
+    return 0;
+
+
+    return i;
 }
